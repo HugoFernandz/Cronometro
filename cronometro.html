@@ -1,0 +1,97 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Cronômetro</title>
+</head>
+<fieldset>
+<body>
+    <h1>Cronômetro</h1>	
+	<form name="cronometro2" position="center">
+		<div>
+			<span id="horas" width="100">00</span>:<span id="minutos" width="100">00</span>:<span id="segundos" width="100">00</span>
+			<!-- :<span id="milisegundos" width="30">0</span> -->
+		<div>
+		<br/>
+		
+		<!-- DECLARADOS OS NAME COM LETRA MINUSCULA-->
+		<button type="button" width="30" name="inicio" >Iniciar/Pausar</button>
+		<button type="button" width="30" name="voltar">Resetar</button>
+		
+	<form>
+	 <!--ABRIR SCRIPT PARA LEITURA E TRATAMENTO DOS DADOS-->
+	 
+	<script>
+	
+		<!--PEGAR OS ID DA DIV-->
+		let horas = 0;
+		let minutos = 0;
+		let segundos = 0;
+		let milisegundos = 0;
+	
+	 <!--SELECIONA CRON EM VEZ DA CLASS-->
+	 let cron;
+	 
+	 <!--DECLARA COMO DOCUMENTO - O NOME DO FORM PUXADO - NOME DO "NAME" DO BUTTON - ONCLICK - NOME DO NAME NOVAMENTE COMO FUNÇÃO-->
+	 document.cronometro2.inicio.onclick = () => inicio();
+	 <!--SE FOR DOIS CLIQUES PARA PARAR-->
+	 document.cronometro2.inicio.ondblclick = () => pause();
+	 <!-- document.cronometro2.pause.onclick = () => pause(); -->
+	 document.cronometro2.voltar.onclick = () => voltar();
+	 
+	 <!--CRIA FUNÇÃO PRA INICIAR-->
+	 function inicio()
+			{
+			pause();
+			cron = setInterval(() => {timer(); },10);
+			}
+	 
+     <!--CRIA FUNÇÃO PARA PARAR-->
+        function pause() 
+		{
+            clearInterval(cron);
+        }
+
+	 <!--CRIA FUNÇÃO DE RESET-->
+        function voltar() {
+			<!--PARAR-->
+			clearInterval(cron);
+			<!--VOLTAR-->
+            horas = 00;
+            minutos = 00;
+            segundos = 00;
+            milisegundos = 00;
+            document.getElementById('horas').innerText = '00';
+            document.getElementById('minutos').innerText = '00';
+            document.getElementById('segundos').innerText = '00';
+            document.getElementById('milisegundos').innerText = '000';
+        }
+
+        function timer() {
+            if ((milisegundos += 10) == 1000) {
+                milisegundos = 0;
+                segundos++;
+            }
+            if (segundos == 60) {
+                segundos = 0;
+                minutos++;
+            }
+            if (minutos == 60) {
+                minutos = 0;
+                horas++;
+            }
+            document.getElementById('horas').innerText = returnData(horas);
+            document.getElementById('minutos').innerText = returnData(minutos);
+            document.getElementById('segundos').innerText = returnData(segundos);
+            document.getElementById('milisegundos').innerText = returnData(milisegundos);
+        }
+
+        function returnData(input) {
+            return input > 10 ? input : `0${input}`
+        }
+    </script>
+</body>
+</fieldset>
+<body>
+</html>
